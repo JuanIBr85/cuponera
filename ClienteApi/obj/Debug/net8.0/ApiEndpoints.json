@@ -1,0 +1,18 @@
+[
+  {
+    "ContainingType": "ClienteApi.Controllers.ClientesController",
+    "Method": "EnviarSolicitudCupones",
+    "RelativePath": "api/Clientes",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "clienteDTO",
+        "Type": "ClienteApi.Models.DTO.ClienteDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  }
+]
