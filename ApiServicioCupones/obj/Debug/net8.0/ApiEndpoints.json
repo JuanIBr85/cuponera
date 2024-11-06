@@ -763,6 +763,22 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "ApiServicioCupones.Controllers.SolicitudCuponesController",
+    "Method": "SolicitarCupon",
+    "RelativePath": "api/SolicitudCupones/SolicitarCupon",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "clienteDto",
+        "Type": "ApiServicioCupones.Models.DTO.ClienteDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "ApiServicioCupones.Controllers.Tipo_CuponController",
     "Method": "GetTipo_Cupon",
     "RelativePath": "api/Tipo_Cupon",

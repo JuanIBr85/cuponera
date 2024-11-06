@@ -15,7 +15,7 @@ namespace ClienteApi.Service
                 var jsonCliente = JsonConvert.SerializeObject(clienteDTO);
                 var contenido = new StringContent(jsonCliente, Encoding.UTF8, "application/json");
                 var client = new HttpClient();
-                var respuesta = await client.PostAsync("https://localhost:7003/api/Cupon_Cliente", contenido);
+                var respuesta = await client.PostAsync("https://localhost:7003/api/SolicitudCupones/SolicitarCupon", contenido);
 
                 if (respuesta.IsSuccessStatusCode)
                 {

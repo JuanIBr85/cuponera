@@ -1,4 +1,6 @@
 using ApiServicioCupones.Data;
+using ApiServicioCupones.Interfaces;
+using ApiServicioCupones.Service;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json.Serialization;
 
@@ -15,6 +17,9 @@ builder.Services.AddControllers().AddJsonOptions(optios=>
     optios.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
 }
 );
+
+builder.Services.AddScoped<ICuponesService, CuponesService>();
+builder.Services.AddScoped<ISendEmailService, SendEmailService>();
 
 /*Log.Logger = new LoggerConfiguration()
     .Enrich.FromLogContext()
