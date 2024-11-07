@@ -4,6 +4,7 @@ using ApiServicioCupones.Models;
 using ApiServicioCupones.Models.DTO;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 
 namespace ApiServicioCupones.Controllers
@@ -65,5 +66,21 @@ namespace ApiServicioCupones.Controllers
 
 
         }
+        /*
+        [HttpPost("Uso_Cupon")]
+
+        public async Task<IActionResult> QuemadoCupon( string nroCupon)
+        {
+            /* (POST): Este endpoint debe manejar el quemado del cupón
+            de un cliente tras haber sido usado por el mismo. 
+            El endpoint recibirá como parámetro el número de cupón(111 - 111 - 111) que
+            va a ser utilizado.
+            El flujo es:
+                        i.Recibir número de cupón.
+                        ii.Insertar registro en Cupones_Historial.
+                        iii.Eliminar registro en Cupones_Clientes.
+                        iv.Devolver mensaje indicando que el cupón fue utilizado correctamente.
+          
+        }*/
     }
 }

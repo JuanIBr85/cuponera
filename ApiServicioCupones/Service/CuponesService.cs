@@ -6,12 +6,13 @@ namespace ApiServicioCupones.Service
     {
         public async Task <string> GenerarNroCupon()
         {
-            /* Logica para la creacion del cupon aleatorio 123-456-789
-             * 
-             *
-             */
+            var random = new Random();
 
-            var nroCupon = "123-456-789";
+            var tresCifras1 = random.Next(0,1000).ToString("D3");
+            var tresCifras2 = random.Next(0,1000).ToString("D3");
+            var tresCifras3 = random.Next(0,1000).ToString("D3");
+
+            var nroCupon = $"{tresCifras1}-{tresCifras2}-{tresCifras3}";
 
             return nroCupon;
         }
