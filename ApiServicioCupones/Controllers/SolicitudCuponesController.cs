@@ -67,7 +67,7 @@ namespace ApiServicioCupones.Controllers
 
         }
         /*
-        [HttpPost("Uso_Cupon")]
+        [HttpPost("QuemadoCupon")]
 
         public async Task<IActionResult> QuemadoCupon( string nroCupon)
         {

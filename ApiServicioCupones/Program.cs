@@ -1,7 +1,11 @@
 using ApiServicioCupones.Data;
 using ApiServicioCupones.Interfaces;
 using ApiServicioCupones.Service;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using Serilog;
+using System.Text;
 using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -21,7 +25,7 @@ builder.Services.AddControllers().AddJsonOptions(optios=>
 builder.Services.AddScoped<ICuponesService, CuponesService>();
 builder.Services.AddScoped<ISendEmailService, SendEmailService>();
 
-/*Log.Logger = new LoggerConfiguration()
+Log.Logger = new LoggerConfiguration()
     .Enrich.FromLogContext()
     .WriteTo.Logger(l =>
         l.Filter.ByIncludingOnly(evt => evt.Level == Serilog.Events.LogEventLevel.Error)
@@ -34,7 +38,7 @@ builder.Services.AddScoped<ISendEmailService, SendEmailService>();
     )
 
     .CreateLogger();
-*/
+
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
