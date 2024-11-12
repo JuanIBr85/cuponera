@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\john_\\source\\repos\\JuanIBr85\\ApiSSDeCupones\\ApiServicioCupones\\ApiServicioCupones.csproj": {}
+    "C:\\Users\\Usuario\\source\\repos\\Cuponera\\cuponera\\ApiServicioCupones\\ApiServicioCupones.csproj": {}
   },
   "projects": {
-    "C:\\Users\\john_\\source\\repos\\JuanIBr85\\ApiSSDeCupones\\ApiServicioCupones\\ApiServicioCupones.csproj": {
+    "C:\\Users\\Usuario\\source\\repos\\Cuponera\\cuponera\\ApiServicioCupones\\ApiServicioCupones.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\john_\\source\\repos\\JuanIBr85\\ApiSSDeCupones\\ApiServicioCupones\\ApiServicioCupones.csproj",
+        "projectUniqueName": "C:\\Users\\Usuario\\source\\repos\\Cuponera\\cuponera\\ApiServicioCupones\\ApiServicioCupones.csproj",
         "projectName": "ApiServicioCupones",
-        "projectPath": "C:\\Users\\john_\\source\\repos\\JuanIBr85\\ApiSSDeCupones\\ApiServicioCupones\\ApiServicioCupones.csproj",
-        "packagesPath": "C:\\Users\\john_\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\john_\\source\\repos\\JuanIBr85\\ApiSSDeCupones\\ApiServicioCupones\\obj\\",
+        "projectPath": "C:\\Users\\Usuario\\source\\repos\\Cuponera\\cuponera\\ApiServicioCupones\\ApiServicioCupones.csproj",
+        "packagesPath": "C:\\Users\\Usuario\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Usuario\\source\\repos\\Cuponera\\cuponera\\ApiServicioCupones\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\john_\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Usuario\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -94,7 +94,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.403/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.400/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

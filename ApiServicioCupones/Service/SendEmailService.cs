@@ -8,8 +8,8 @@ namespace ApiServicioCupones.Service
     {
         public async Task EnviarEmailCliente(string emailCliente, string nroCupon)
         {
-            string emailEmisor = "xxxxxxx@gmail.com"; // crear un mail, como en PHP
-            string emailCodigo = "xxxxyyyyxxxyyy"; // generar clave de aplicacion, como en PHP
+            string emailEmisor = "api.cuponeraprogiv.unlz@gmail.com"; // crear un mail, como en PHP (Apicuponera)
+            string emailCodigo = "fjyt fwiu jwwy sehs"; // generar clave de aplicacion, como en PHP
             string servicioGoogle = "smtp.gmail.com";
 
             try

@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\john_\\source\\repos\\JuanIBr85\\ApiSSDeCupones\\ClienteApi\\ClienteApi.csproj": {}
+    "C:\\Users\\Usuario\\source\\repos\\Cuponera\\cuponera\\ClienteApi\\ClienteApi.csproj": {}
   },
   "projects": {
-    "C:\\Users\\john_\\source\\repos\\JuanIBr85\\ApiSSDeCupones\\ClienteApi\\ClienteApi.csproj": {
+    "C:\\Users\\Usuario\\source\\repos\\Cuponera\\cuponera\\ClienteApi\\ClienteApi.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\john_\\source\\repos\\JuanIBr85\\ApiSSDeCupones\\ClienteApi\\ClienteApi.csproj",
+        "projectUniqueName": "C:\\Users\\Usuario\\source\\repos\\Cuponera\\cuponera\\ClienteApi\\ClienteApi.csproj",
         "projectName": "ClienteApi",
-        "projectPath": "C:\\Users\\john_\\source\\repos\\JuanIBr85\\ApiSSDeCupones\\ClienteApi\\ClienteApi.csproj",
-        "packagesPath": "C:\\Users\\john_\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\john_\\source\\repos\\JuanIBr85\\ApiSSDeCupones\\ClienteApi\\obj\\",
+        "projectPath": "C:\\Users\\Usuario\\source\\repos\\Cuponera\\cuponera\\ClienteApi\\ClienteApi.csproj",
+        "packagesPath": "C:\\Users\\Usuario\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Usuario\\source\\repos\\Cuponera\\cuponera\\ClienteApi\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\john_\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Usuario\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -98,7 +98,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.403/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.400/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
