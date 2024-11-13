@@ -7910,6 +7910,7 @@
       "Microsoft.EntityFrameworkCore.SqlServer >= 9.0.0",
       "Microsoft.EntityFrameworkCore.Tools >= 9.0.0",
       "Microsoft.VisualStudio.Web.CodeGeneration.Design >= 9.0.0",
+      "Newtonsoft.Json >= 13.0.3",
       "Serilog >= 4.1.0",
       "Serilog.Sinks.File >= 6.0.0",
       "Swashbuckle.AspNetCore >= 7.0.0"
@@ -7922,11 +7923,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\HP\\Documents\\cuponera\\ApiServicioCupones\\ApiServicioCupones.csproj",
+      "projectUniqueName": "C:\\Users\\HP\\Documents\\Cuponera\\ApiServicioCupones\\ApiServicioCupones.csproj",
       "projectName": "ApiServicioCupones",
-      "projectPath": "C:\\Users\\HP\\Documents\\cuponera\\ApiServicioCupones\\ApiServicioCupones.csproj",
+      "projectPath": "C:\\Users\\HP\\Documents\\Cuponera\\ApiServicioCupones\\ApiServicioCupones.csproj",
       "packagesPath": "C:\\Users\\HP\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\HP\\Documents\\cuponera\\ApiServicioCupones\\obj\\",
+      "outputPath": "C:\\Users\\HP\\Documents\\Cuponera\\ApiServicioCupones\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -7992,6 +7993,10 @@
           "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
             "target": "Package",
             "version": "[9.0.0, )"
+          },
+          "Newtonsoft.Json": {
+            "target": "Package",
+            "version": "[13.0.3, )"
           },
           "Serilog": {
             "target": "Package",

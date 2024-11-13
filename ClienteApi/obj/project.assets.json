@@ -8236,11 +8236,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\HP\\Documents\\cuponera\\ClienteApi\\ClienteApi.csproj",
+      "projectUniqueName": "C:\\Users\\HP\\Documents\\Cuponera\\ClienteApi\\ClienteApi.csproj",
       "projectName": "ClienteApi",
-      "projectPath": "C:\\Users\\HP\\Documents\\cuponera\\ClienteApi\\ClienteApi.csproj",
+      "projectPath": "C:\\Users\\HP\\Documents\\Cuponera\\ClienteApi\\ClienteApi.csproj",
       "packagesPath": "C:\\Users\\HP\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\HP\\Documents\\cuponera\\ClienteApi\\obj\\",
+      "outputPath": "C:\\Users\\HP\\Documents\\Cuponera\\ClienteApi\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -8342,5 +8342,13 @@
         "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.400/PortableRuntimeIdentifierGraph.json"
       }
     }
-  }
+  },
+  "logs": [
+    {
+      "code": "Undefined",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Problema al leer el archivo de caché C:\\Users\\HP\\Documents\\Cuponera\\ClienteApi\\obj\\project.nuget.cache : Invalid property identifier character: <. Path 'version', line 3, position 0."
+    }
+  ]
 }
