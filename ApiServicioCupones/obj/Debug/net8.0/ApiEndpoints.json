@@ -764,6 +764,22 @@
   },
   {
     "ContainingType": "ApiServicioCupones.Controllers.SolicitudCuponesController",
+    "Method": "QuemadoCupon",
+    "RelativePath": "api/SolicitudCupones/QuemadoCupon",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "nroCupon",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ApiServicioCupones.Controllers.SolicitudCuponesController",
     "Method": "SolicitarCupon",
     "RelativePath": "api/SolicitudCupones/SolicitarCupon",
     "HttpMethod": "POST",

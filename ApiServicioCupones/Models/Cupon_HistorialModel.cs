@@ -9,7 +9,7 @@ namespace ApiServicioCupones.Models
         public int Id_Cupon { get; set; }
         [Key]
         public string NroCupon { get; set; }
-        public DateOnly FechaUso { get; set; }
+        public DateTime FechaUso { get; set; }
         public string CodCliente {  get; set; }
     }
 }

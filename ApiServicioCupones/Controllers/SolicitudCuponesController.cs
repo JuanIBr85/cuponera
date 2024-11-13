@@ -4,6 +4,7 @@ using ApiServicioCupones.Models;
 using ApiServicioCupones.Models.DTO;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 
@@ -82,5 +83,36 @@ namespace ApiServicioCupones.Controllers
                         iv.Devolver mensaje indicando que el cupón fue utilizado correctamente.
           
         }*/
+
+        [HttpPost("QuemadoCupon")]
+        public async Task<IActionResult> QuemadoCupon([FromBody] string nroCupon)
+        {
+            try
+            {
+                var cuponCliente = await _context.Cupones_Clientes
+                    .FirstOrDefaultAsync(c => c.NroCupon == nroCupon);
+
+                if (cuponCliente == null)
+                    return NotFound("El cupón no existe o ya fue utilizado.");
+
+                var cuponHistorial = new Cupon_HistorialModel
+                {
+                    Id_Cupon = cuponCliente.Id_Cupon,
+                    NroCupon = nroCupon,
+                    FechaUso = DateTime.Now
+                };
+
+                _context.Cupones_Historial.Add(cuponHistorial);
+                _context.Cupones_Clientes.Remove(cuponCliente);
+
+                await _context.SaveChangesAsync();
+
+                return Ok(new { Msj = $"El cupón {nroCupon} fue utilizado correctamente." });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Error: {ex.Message}");
+            }
+        }
     }
 }
