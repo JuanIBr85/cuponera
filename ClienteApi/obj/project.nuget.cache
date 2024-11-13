@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "5oy+XnucF18=",
+  "dgSpecHash": "BgfvuMfCbzE=",
   "success": true,
-  "projectFilePath": "C:\\Users\\HP\\Documents\\cuponera\\ClienteApi\\ClienteApi.csproj",
+  "projectFilePath": "C:\\Users\\HP\\Documents\\Cuponera\\ClienteApi\\ClienteApi.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\HP\\.nuget\\packages\\azure.core\\1.35.0\\azure.core.1.35.0.nupkg.sha512",
     "C:\\Users\\HP\\.nuget\\packages\\azure.identity\\1.10.3\\azure.identity.1.10.3.nupkg.sha512",

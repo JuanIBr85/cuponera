@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\HP\\Documents\\cuponera\\ClienteApi\\ClienteApi.csproj": {}
+    "C:\\Users\\HP\\Documents\\Cuponera\\ClienteApi\\ClienteApi.csproj": {}
   },
   "projects": {
-    "C:\\Users\\HP\\Documents\\cuponera\\ClienteApi\\ClienteApi.csproj": {
+    "C:\\Users\\HP\\Documents\\Cuponera\\ClienteApi\\ClienteApi.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\HP\\Documents\\cuponera\\ClienteApi\\ClienteApi.csproj",
+        "projectUniqueName": "C:\\Users\\HP\\Documents\\Cuponera\\ClienteApi\\ClienteApi.csproj",
         "projectName": "ClienteApi",
-        "projectPath": "C:\\Users\\HP\\Documents\\cuponera\\ClienteApi\\ClienteApi.csproj",
+        "projectPath": "C:\\Users\\HP\\Documents\\Cuponera\\ClienteApi\\ClienteApi.csproj",
         "packagesPath": "C:\\Users\\HP\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\HP\\Documents\\cuponera\\ClienteApi\\obj\\",
+        "outputPath": "C:\\Users\\HP\\Documents\\Cuponera\\ClienteApi\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

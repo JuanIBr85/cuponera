@@ -12,6 +12,14 @@ namespace ClienteApi.Service
         {
             try
             {
+                //ClienteDTO clienteDTO1 = new ClienteDTO()
+                //{
+                //    id_Cupon = 1,
+                //    CodCliente = "1",
+                 //   NroCupon = "1",
+                 //   FechaAsignado = DateTime.Now
+                //};
+
                 var jsonCliente = JsonConvert.SerializeObject(clienteDTO);
                 var contenido = new StringContent(jsonCliente, Encoding.UTF8, "application/json");
                 var client = new HttpClient();

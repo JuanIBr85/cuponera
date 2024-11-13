@@ -1,5 +1,5 @@
 ﻿using ClienteApi.Models.DTO;
-using ClienteApi.Service;
+using ClienteApi.Interface; 
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,29 +9,31 @@ namespace ClienteApi.Controllers
     [ApiController]
     public class ClientesController : ControllerBase
     {
-        private readonly ClientesService _clientesService;
+        private readonly IClienteService _clientesService;
 
-        public ClientesController (ClientesService clientesService)
+        public ClientesController(IClienteService clientesService) // Usa IClienteService en lugar de ClientesService
         {
             _clientesService = clientesService;
         }
 
         [HttpPost]
-
         public async Task<IActionResult> EnviarSolicitudCupones([FromBody] ClienteDTO clienteDTO)
-
         {
             try
             {
                 var respuesta = await _clientesService.SolicitarCupon(clienteDTO);
                 return Ok(respuesta);
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
-                return BadRequest($"Error: {ex.Message}");
+                var errorMessage = $"Error: {ex.Message}";
+                if (ex.InnerException != null)
+                {
+                    errorMessage += $" Inner Exception: {ex.InnerException.Message}";
+                }
 
+                return BadRequest(errorMessage);
             }
-
         }
     }
 }

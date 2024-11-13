@@ -9,7 +9,6 @@ namespace ClienteApi.Data
 
         public DbSet<ClientesModel> Clientes { get; set; }
 
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<ClientesModel>()
