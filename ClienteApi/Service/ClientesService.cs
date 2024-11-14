@@ -1,25 +1,17 @@
 ﻿using ClienteApi.Interface;
 using ClienteApi.Models.DTO;
 using Newtonsoft.Json;
+using System.Net.Http;
 using System.Text;
 
 namespace ClienteApi.Service
 {
     public class ClientesService : IClienteService
     {
-
-        public async Task<string> SolicitarCupon (ClienteDTO clienteDTO)
+        public async Task<string> SolicitarCupon(ClienteDTO clienteDTO)
         {
             try
             {
-                //ClienteDTO clienteDTO1 = new ClienteDTO()
-                //{
-                //    id_Cupon = 1,
-                //    CodCliente = "1",
-                 //   NroCupon = "1",
-                 //   FechaAsignado = DateTime.Now
-                //};
-
                 var jsonCliente = JsonConvert.SerializeObject(clienteDTO);
                 var contenido = new StringContent(jsonCliente, Encoding.UTF8, "application/json");
                 var client = new HttpClient();
@@ -35,11 +27,38 @@ namespace ClienteApi.Service
                     var error = await respuesta.Content.ReadAsStringAsync();
                     throw new Exception($"{error}");
                 }
-
             }
             catch (Exception ex)
             {
                 throw new Exception($"Error: {ex.Message}");
+            }
+        }
+
+        public async Task<string> QuemarCuponAsync(string nroCupon)
+        {
+            try
+            {
+                var client = new HttpClient();
+
+                var response = await client.PostAsync(
+                    $"https://localhost:7003/api/SolicitudCupones/QuemarCupon?nroCupon={nroCupon}",
+                    null
+                );
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var responseContent = await response.Content.ReadAsStringAsync();
+                    return responseContent;
+                }
+                else
+                {
+                    var error = await response.Content.ReadAsStringAsync();
+                    throw new Exception($"Error: {error}");
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error al intentar quemar el cupón: {ex.Message}");
             }
         }
     }
