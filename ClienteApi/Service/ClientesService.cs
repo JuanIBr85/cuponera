@@ -61,5 +61,29 @@ namespace ClienteApi.Service
                 throw new Exception($"Error al intentar quemar el cupón: {ex.Message}");
             }
         }
+
+        public async Task<string> ObtenerCuponesActivosAsync(string codCliente)
+        {
+            try
+            {
+                var client = new HttpClient();
+                var response = await client.GetAsync($"https://localhost:7003/api/SolicitudCupones/CuponesActivos?codCliente={codCliente}");
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var responseContent = await response.Content.ReadAsStringAsync();
+                    return responseContent;
+                }
+                else
+                {
+                    var error = await response.Content.ReadAsStringAsync();
+                    throw new Exception($"Error: {error}");
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error al obtener cupones activos: {ex.Message}");
+            }
+        }
     }
 }

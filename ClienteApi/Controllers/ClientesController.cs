@@ -2,6 +2,7 @@
 using ClienteApi.Interface;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Net.Http;
 
 namespace ClienteApi.Controllers
 {
@@ -42,6 +43,25 @@ namespace ClienteApi.Controllers
             try
             {
                 var respuesta = await _clientesService.QuemarCuponAsync(nroCupon);
+                return Ok(respuesta);
+            }
+            catch (Exception ex)
+            {
+                var errorMessage = $"Error: {ex.Message}";
+                if (ex.InnerException != null)
+                {
+                    errorMessage += $" Inner Exception: {ex.InnerException.Message}";
+                }
+
+                return BadRequest(errorMessage);
+            }
+        }
+        [HttpGet("CuponesActivos")]
+        public async Task<IActionResult> ObtenerCuponesActivos([FromQuery] string codCliente)
+        {
+            try
+            {
+                var respuesta = await _clientesService.ObtenerCuponesActivosAsync(codCliente);
                 return Ok(respuesta);
             }
             catch (Exception ex)
