@@ -40,7 +40,7 @@ namespace ClienteApi.Service
             {
                 var client = new HttpClient();
 
-                var response = await client.PostAsync(
+                var response = await client.PostAsync( // https://www.youtube.com/watch?v=kvuJIqGGIG4 y por qué en inglés?, por las dudas mejor usar dos variables que reciclar "respuesta"
                     $"https://localhost:7003/api/SolicitudCupones/QuemarCupon?nroCupon={nroCupon}",
                     null
                 );
