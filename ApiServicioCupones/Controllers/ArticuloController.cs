@@ -94,7 +94,9 @@ namespace ApiServicioCupones.Controllers
                 return NotFound();
             }
 
-            _context.Articulos.Remove(articuloModel);
+            articuloModel.Activo = false;
+
+            _context.Articulos.Update(articuloModel);
             await _context.SaveChangesAsync();
 
             return NoContent();
