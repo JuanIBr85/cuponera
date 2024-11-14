@@ -1,8 +1,40 @@
 [
   {
     "ContainingType": "ClienteApi.Controllers.ClientesController",
+    "Method": "ObtenerCuponesActivos",
+    "RelativePath": "api/Clientes/CuponesActivos",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "codCliente",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ClienteApi.Controllers.ClientesController",
+    "Method": "QuemarCupon",
+    "RelativePath": "api/Clientes/QuemarCupon",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "nroCupon",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ClienteApi.Controllers.ClientesController",
     "Method": "EnviarSolicitudCupones",
-    "RelativePath": "api/Clientes",
+    "RelativePath": "api/Clientes/SolicitarCupon",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
