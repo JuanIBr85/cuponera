@@ -99,7 +99,9 @@ namespace ApiServicioCupones.Controllers
                 return NotFound();
             }
 
-            _context.Cupones.Remove(cuponModel);
+            cuponModel.Activo = false;
+
+            _context.Cupones.Update(cuponModel);
             await _context.SaveChangesAsync();
 
             return NoContent();
