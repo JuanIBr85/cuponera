@@ -84,35 +84,79 @@ namespace ApiServicioCupones.Controllers
           
         }*/
 
-        [HttpPost("QuemadoCupon")]
-        public async Task<IActionResult> QuemadoCupon([FromBody] string nroCupon)
+        [HttpPost("QuemarCupon")]
+        public async Task<IActionResult> QuemarCupon(string nroCupon)
         {
             try
             {
-                var cuponCliente = await _context.Cupones_Clientes
-                    .FirstOrDefaultAsync(c => c.NroCupon == nroCupon);
+                Console.WriteLine($"Iniciando quemado de cupón con número: {nroCupon}");
 
-                if (cuponCliente == null)
-                    return NotFound("El cupón no existe o ya fue utilizado.");
+                var cupon = await _context.Cupones_Clientes
+                                           .FirstOrDefaultAsync(c => c.NroCupon == nroCupon);
 
-                var cuponHistorial = new Cupon_HistorialModel
+                if (cupon == null)
                 {
-                    Id_Cupon = cuponCliente.Id_Cupon,
-                    NroCupon = nroCupon,
-                    FechaUso = DateTime.Now
+                    Console.WriteLine("El cupón no existe en Cupones_Clientes.");
+                    return BadRequest("El cupón no existe.");
+                }
+
+                Console.WriteLine("Cupón encontrado en Cupones_Clientes. Verificando historial...");
+                var historial = await _context.Cupones_Historial
+                                               .FirstOrDefaultAsync(h => h.NroCupon == nroCupon);
+
+                if (historial != null)
+                {
+                    Console.WriteLine("El cupón ya ha sido utilizado según el historial.");
+                    return BadRequest("El cupón ya ha sido utilizado.");
+                }
+
+                Console.WriteLine("Registrando el uso del cupón en Cupones_Historial...");
+                Cupon_HistorialModel nuevoHistorial = new Cupon_HistorialModel()
+                {
+                    Id_Cupon = cupon.Id_Cupon,
+                    NroCupon = cupon.NroCupon,
+                    FechaUso = DateTime.Now,
+                    CodCliente = cupon.CodCliente
                 };
 
-                _context.Cupones_Historial.Add(cuponHistorial);
-                _context.Cupones_Clientes.Remove(cuponCliente);
+                _context.Cupones_Historial.Add(nuevoHistorial);
 
+                Console.WriteLine("Eliminando cupón de Cupones_Clientes...");
+                _context.Cupones_Clientes.Remove(cupon);
+
+                Console.WriteLine("Guardando cambios en la base de datos...");
                 await _context.SaveChangesAsync();
 
-                return Ok(new { Msj = $"El cupón {nroCupon} fue utilizado correctamente." });
+                Console.WriteLine("Operación de quemado de cupón completada con éxito.");
+                return Ok(new { mensaje = "El cupón fue utilizado correctamente." });
+            }
+            catch (DbUpdateException dbEx)
+            {
+                Console.WriteLine($"DbUpdateException: {dbEx.Message}");
+                if (dbEx.InnerException != null)
+                {
+                    Console.WriteLine($"Inner Exception: {dbEx.InnerException.Message}");
+                    if (dbEx.InnerException.InnerException != null)
+                    {
+                        Console.WriteLine($"Inner Inner Exception: {dbEx.InnerException.InnerException.Message}");
+                    }
+                }
+                return BadRequest($"Database Error: {dbEx.Message} | Inner: {dbEx.InnerException?.Message}");
             }
             catch (Exception ex)
             {
-                return BadRequest($"Error: {ex.Message}");
+                Console.WriteLine($"General Exception: {ex.Message}");
+                if (ex.InnerException != null)
+                {
+                    Console.WriteLine($"Inner Exception: {ex.InnerException.Message}");
+                }
+
+                return BadRequest($"Error: {ex.Message} | Inner: {ex.InnerException?.Message}");
             }
         }
+
+
+
+
     }
 }
