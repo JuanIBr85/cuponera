@@ -44,10 +44,10 @@ namespace ApiServicioCupones.Controllers
 
         // PUT: api/Cupon_Detalle/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutCupon_DetalleModel(int id, Cupon_DetalleModel cupon_DetalleModel)
+        [HttpPut("{id_cupon}/{id_articulo}")]
+        public async Task<IActionResult> PutCupon_DetalleModel(int id_cupon, int id_articulo, Cupon_DetalleModel cupon_DetalleModel)
         {
-            if (id != cupon_DetalleModel.Id_Cupon)
+            if (id_cupon != cupon_DetalleModel.Id_Cupon || id_articulo != cupon_DetalleModel.Id_Articulo)
             {
                 return BadRequest();
             }
@@ -60,7 +60,7 @@ namespace ApiServicioCupones.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!Cupon_DetalleModelExists(id))
+                if (!Cupon_DetalleModelExists(id_cupon, id_articulo))
                 {
                     return NotFound();
                 }
@@ -69,7 +69,7 @@ namespace ApiServicioCupones.Controllers
                     throw;
                 }
             }
-
+            
             return NoContent();
         }
 
@@ -85,7 +85,7 @@ namespace ApiServicioCupones.Controllers
             }
             catch (DbUpdateException)
             {
-                if (Cupon_DetalleModelExists(cupon_DetalleModel.Id_Cupon))
+                if (Cupon_DetalleModelExists(cupon_DetalleModel.Id_Cupon, cupon_DetalleModel.Id_Articulo))
                 {
                     return Conflict();
                 }
@@ -95,14 +95,15 @@ namespace ApiServicioCupones.Controllers
                 }
             }
 
-            return CreatedAtAction("GetCupon_DetalleModel", new { id = cupon_DetalleModel.Id_Cupon }, cupon_DetalleModel);
+            return CreatedAtAction("GetCupon_DetalleModel", new { id = cupon_DetalleModel.Id_Cupon, id_articulo = cupon_DetalleModel.Id_Articulo }, cupon_DetalleModel);
         }
 
         // DELETE: api/Cupon_Detalle/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteCupon_DetalleModel(int id)
+        [HttpDelete("{id_cupon}/{id_articulo}")]
+        public async Task<IActionResult> DeleteCupon_DetalleModel(int id_cupon, int id_articulo)
         {
-            var cupon_DetalleModel = await _context.Cupones_Detalle.FindAsync(id);
+            var cupon_DetalleModel = await _context.Cupones_Detalle
+                        .FirstOrDefaultAsync(e => e.Id_Cupon == id_cupon && e.Id_Articulo == id_articulo);
             if (cupon_DetalleModel == null)
             {
                 return NotFound();
@@ -114,9 +115,9 @@ namespace ApiServicioCupones.Controllers
             return NoContent();
         }
 
-        private bool Cupon_DetalleModelExists(int id)
+        private bool Cupon_DetalleModelExists(int id_cupon, int id_articulo)
         {
-            return _context.Cupones_Detalle.Any(e => e.Id_Cupon == id);
+            return _context.Cupones_Detalle.Any(e => e.Id_Cupon == id_cupon && e.Id_Articulo == id_articulo);
         }
     }
 }

@@ -25,14 +25,17 @@ namespace ApiServicioCupones.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ArticuloModel>>> GetArticulos()
         {
-            return await _context.Articulos.ToListAsync();
+            return await _context.Articulos
+                .Include(art => art.Precio).ToListAsync();
         }
 
         // GET: api/Articulo/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<ArticuloModel>> GetArticuloModel(int id)
+        [HttpGet("{id_articulo}")]
+        public async Task<ActionResult<ArticuloModel>> GetArticuloModel(int id_articulo)
         {
-            var articuloModel = await _context.Articulos.FindAsync(id);
+            var articuloModel = await _context.Articulos
+                      .Include(art => art.Precio)
+                       .FirstOrDefaultAsync(art => art.Id_Articulo == id_articulo);
 
             if (articuloModel == null)
             {
