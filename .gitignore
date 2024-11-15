@@ -1,4 +1,5 @@
 .vs/
-bin/
+# Ignorar directorios de compilación
 obj/
+bin/
 

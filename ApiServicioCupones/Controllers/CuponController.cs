@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ApiServicioCupones.Data;
 using ApiServicioCupones.Models;
+using ApiServicioCupones.Service;
 
 namespace ApiServicioCupones.Controllers
 {
@@ -15,10 +16,12 @@ namespace ApiServicioCupones.Controllers
     public class CuponController : ControllerBase
     {
         private readonly DataBaseContext _context;
+        private readonly CuponesService _cuponesService;
 
-        public CuponController(DataBaseContext context)
+        public CuponController(DataBaseContext context, CuponesService cuponesService)
         {
             _context = context;
+            _cuponesService = cuponesService;
         }
 
         // GET: api/Cupon
@@ -89,6 +92,13 @@ namespace ApiServicioCupones.Controllers
             return CreatedAtAction("GetCuponModel", new { id = cuponModel.Id_Cupon }, cuponModel);
         }
 
+       /* [HttpPost("desactiva-cupones-expirados")]
+        public async Task<IActionResult> DesactivarCupones()
+        {
+            await _cuponesService.DesactivaCuponPorFecha();   
+            return Ok("Cupones expirados desactivados correctamente.");
+        }
+       */
         // DELETE: api/Cupon/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCuponModel(int id)

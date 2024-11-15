@@ -33,5 +33,27 @@ namespace ApiServicioCupones.Service
 
             return nroCupon;
         }
+
+       /* public async Task DesactivaCuponPorFecha()
+        {
+
+            var cuponesActivos = await _context.Cupones
+                    .Where(c=> c.Activo == true)
+                    .ToListAsync();
+
+            foreach (var cupon in cuponesActivos)
+            {
+                var fechaActual = DateOnly.FromDateTime(DateTime.Now);
+
+                if(fechaActual<cupon.FechaInicio || fechaActual > cupon.FechaInicio) 
+                {
+                    cupon.Activo = false;
+                    _context.Cupones.Update(cupon);
+                }
+            }
+
+            await _context.SaveChangesAsync();
+            
+        }*/
     }
 }
