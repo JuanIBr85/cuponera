@@ -196,6 +196,25 @@ namespace ApiServicioCupones.Controllers
             }
         }
 
+        [HttpGet("CuponesActivos")]
+        public async Task<IActionResult> ObtenerCuponesActivos(string codCliente)
+        {
+            if (string.IsNullOrEmpty(codCliente))
+            {
+                return BadRequest("El código de cliente es obligatorio.");
+            }
+
+            var cuponesActivos = await _context.Cupones_Historial
+                                                .Where(c => c.CodCliente == codCliente)
+                                                .ToListAsync();
+
+            if (cuponesActivos == null || !cuponesActivos.Any())
+            {
+                return NotFound($"No se encontraron cupones activos para el cliente con código {codCliente}.");
+            }
+
+            return Ok(cuponesActivos);
+        }
 
 
 

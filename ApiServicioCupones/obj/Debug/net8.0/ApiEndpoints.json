@@ -764,6 +764,22 @@
   },
   {
     "ContainingType": "ApiServicioCupones.Controllers.SolicitudCuponesController",
+    "Method": "ObtenerCuponesActivos",
+    "RelativePath": "api/SolicitudCupones/CuponesActivos",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "codCliente",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ApiServicioCupones.Controllers.SolicitudCuponesController",
     "Method": "QuemarCupon",
     "RelativePath": "api/SolicitudCupones/QuemarCupon",
     "HttpMethod": "POST",
