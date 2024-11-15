@@ -195,7 +195,6 @@ namespace ApiServicioCupones.Controllers
                 return BadRequest($"Error: {ex.Message}");
             }
         }
-
         [HttpGet("CuponesActivos")]
         public async Task<IActionResult> ObtenerCuponesActivos(string codCliente)
         {
@@ -204,9 +203,15 @@ namespace ApiServicioCupones.Controllers
                 return BadRequest("El código de cliente es obligatorio.");
             }
 
-            var cuponesActivos = await _context.Cupones_Historial
-                                                .Where(c => c.CodCliente == codCliente)
-                                                .ToListAsync();
+            var cuponesActivos = await (from c in _context.Cupones
+                                        join ch in _context.Cupones_Historial
+                                        on c.Id_Cupon equals ch.Id_Cupon
+                                        where c.Activo == true && ch.CodCliente == codCliente
+                                        select new
+                                        {
+                                            c,   // tabla Cupones
+                                            ch   // tabla Cupones_Historial
+                                        }).ToListAsync();
 
             if (cuponesActivos == null || !cuponesActivos.Any())
             {
@@ -215,6 +220,7 @@ namespace ApiServicioCupones.Controllers
 
             return Ok(cuponesActivos);
         }
+
 
 
 
