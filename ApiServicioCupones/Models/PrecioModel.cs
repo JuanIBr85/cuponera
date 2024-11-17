@@ -7,7 +7,12 @@ namespace ApiServicioCupones.Models
     {
         [Key]
         public int Id_Precio { get; set; }
-        public int Id_Articulo {  get; set; }
-        public decimal Precio {  get; set; }
+
+        [ForeignKey("Articulo")]
+        public int Id_Articulo { get; set; }
+
+        public decimal Precio { get; set; }
+
+        public virtual ArticuloModel? Articulo { get; set; }
     }
 }

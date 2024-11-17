@@ -34,8 +34,8 @@ namespace ApiServicioCupones.Controllers
         public async Task<ActionResult<ArticuloModel>> GetArticuloModel(int id_articulo)
         {
             var articuloModel = await _context.Articulos
-                      //.Include(art => art.Precio)
-                       .FirstOrDefaultAsync(art => art.Id_Articulo == id_articulo);
+                .Include(a => a.Precio)
+                .FirstOrDefaultAsync(a => a.Id_Articulo == id_articulo);
 
             if (articuloModel == null)
             {
@@ -44,6 +44,7 @@ namespace ApiServicioCupones.Controllers
 
             return articuloModel;
         }
+
 
         // PUT: api/Articulo/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
@@ -79,25 +80,39 @@ namespace ApiServicioCupones.Controllers
         // POST: api/Articulo
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<ArticuloModel>> PostArticuloModel(ArticuloModel articuloModel)
+        public async Task<ActionResult<ArticuloModel>> PostArticuloModel(ArticuloModel articuloModel, decimal precio)
         {
+            using var transaction = await _context.Database.BeginTransactionAsync();
+
             try
             {
-                // No debes asignar un valor a Id_Articulo. SQL Server lo generará automáticamente.
+                // Agregar el artículo
                 _context.Articulos.Add(articuloModel);
                 await _context.SaveChangesAsync();
 
-                // El Id_Articulo se genera automáticamente después de la inserción
-                // Devolvemos el artículo creado con el Id_Articulo recién generado
-                return CreatedAtAction("GetArticuloModel", new { id = articuloModel.Id_Articulo }, articuloModel);
+                // Crear y asociar el precio
+                var precioModel = new PrecioModel
+                {
+                    Id_Articulo = articuloModel.Id_Articulo,
+                    Precio = precio
+                };
+
+                _context.Precios.Add(precioModel);
+                await _context.SaveChangesAsync();
+
+                await transaction.CommitAsync();
+
+                // Devolver el artículo creado
+                return CreatedAtAction("GetArticuloModel", new { id_articulo = articuloModel.Id_Articulo }, articuloModel);
             }
             catch (Exception ex)
             {
-                // Log o despliegue del error
-                Console.WriteLine($"Error al guardar el artículo: {ex.Message}");
-                return StatusCode(500, "Error al guardar el artículo.");
+                await transaction.RollbackAsync();
+                Console.WriteLine($"Error: {ex.Message}");
+                return StatusCode(500, "Error al guardar el artículo y su precio.");
             }
         }
+
 
 
         // DELETE: api/Articulo/5
