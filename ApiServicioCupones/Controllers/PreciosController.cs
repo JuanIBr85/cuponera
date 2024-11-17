@@ -44,10 +44,10 @@ namespace ApiServicioCupones.Controllers
 
         // PUT: api/Precios/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutPrecioModel(int id, PrecioModel precioModel)
+        [HttpPut("{id_Precio}")]
+        public async Task<IActionResult> PutPrecioModel(int id_Precio, PrecioModel precioModel)
         {
-            if (id != precioModel.Id_Precio)
+            if (id_Precio != precioModel.Id_Precio)
             {
                 return BadRequest();
             }
@@ -60,7 +60,7 @@ namespace ApiServicioCupones.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!PrecioModelExists(id))
+                if (!PrecioModelExists(id_Precio))
                 {
                     return NotFound();
                 }
@@ -85,24 +85,28 @@ namespace ApiServicioCupones.Controllers
         }
 
         // DELETE: api/Precios/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeletePrecioModel(int id)
+        [HttpDelete("{id_Precio}")]
+        public async Task<IActionResult> DeletePrecioModel(int id_Precio)
         {
-            var precioModel = await _context.Precios.FindAsync(id);
+            var precioModel = await _context.Precios
+                .Include(p => p.Articulo)
+                .FirstOrDefaultAsync(p => p.Id_Precio == id_Precio);
+
             if (precioModel == null)
             {
                 return NotFound();
             }
-
-            _context.Precios.Remove(precioModel);
+            precioModel.Precio = 0;
+            _context.Precios.Update(precioModel);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool PrecioModelExists(int id)
+
+        private bool PrecioModelExists(int id_Precio)
         {
-            return _context.Precios.Any(e => e.Id_Precio == id);
+            return _context.Precios.Any(e => e.Id_Precio == id_Precio);
         }
     }
 }
