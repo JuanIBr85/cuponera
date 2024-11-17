@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ApiServicioCupones.Data;
 using ApiServicioCupones.Models;
+using Serilog;
 
 namespace ApiServicioCupones.Controllers
 {
@@ -25,21 +26,45 @@ namespace ApiServicioCupones.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<PrecioModel>>> GetPrecios()
         {
-            return await _context.Precios.ToListAsync();
+            Log.Information("Se consulto la lista de precios.");
+
+            try
+            {
+                var precios = await _context.Precios.ToListAsync();
+
+                return Ok(precios);
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ocurrió un error al intentar obtener los precios.");
+                return StatusCode(StatusCodes.Status500InternalServerError, "Error al obtener los precios.");
+            }
         }
 
         // GET: api/Precios/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<PrecioModel>> GetPrecioModel(int id)
+        [HttpGet("{id_Precio}")]
+        public async Task<ActionResult<PrecioModel>> GetPrecioModel(int id_Precio)
         {
-            var precioModel = await _context.Precios.FindAsync(id);
+            Log.Information("Iniciando la operación para obtener el precio con ID {Id}", id_Precio);
 
-            if (precioModel == null)
+            try
             {
-                return NotFound();
-            }
+                var precioModel = await _context.Precios.FindAsync(id_Precio);
 
-            return precioModel;
+                if (precioModel == null)
+                {
+                    Log.Information("No se encontró un precio con el ID {Id}", id_Precio);
+                    return NotFound();
+                }
+
+                Log.Information("Precio con ID {Id} obtenido con éxito.", id_Precio);
+                return Ok(precioModel);
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ocurrió un error al intentar obtener el precio con ID {Id}", id_Precio);
+                return StatusCode(StatusCodes.Status500InternalServerError, "Error al obtener el precio.");
+            }
         }
 
         // PUT: api/Precios/5
@@ -57,15 +82,19 @@ namespace ApiServicioCupones.Controllers
             try
             {
                 await _context.SaveChangesAsync();
+                Log.Information("El precio con ID {Id_Precio} fue actualizado exitosamente.", id_Precio);
+
             }
-            catch (DbUpdateConcurrencyException)
+            catch (DbUpdateConcurrencyException ex)
             {
                 if (!PrecioModelExists(id_Precio))
                 {
+                    Log.Error("No se encontró un precio con el ID {Id_Precio} para actualizar.", id_Precio);
                     return NotFound();
                 }
                 else
                 {
+                    Log.Error(ex, "Ocurrió un error al intentar actualizar el precio con ID {Id_Precio}.", id_Precio);
                     throw;
                 }
             }
@@ -78,11 +107,22 @@ namespace ApiServicioCupones.Controllers
         [HttpPost]
         public async Task<ActionResult<PrecioModel>> PostPrecioModel(PrecioModel precioModel)
         {
-            _context.Precios.Add(precioModel);
-            await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetPrecioModel", new { id = precioModel.Id_Precio }, precioModel);
+            try
+            {
+                _context.Precios.Add(precioModel);
+                await _context.SaveChangesAsync();
+                Log.Information("Nuevo precio creado exitosamente con ID {Id_Precio}.", precioModel.Id_Precio);
+
+                return CreatedAtAction("GetPrecioModel", new { id = precioModel.Id_Precio }, precioModel);
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ocurrió un error al intentar crear un nuevo precio.");
+                return StatusCode(StatusCodes.Status500InternalServerError, "Error al crear el precio.");
+            }
         }
+
 
         // DELETE: api/Precios/5
         [HttpDelete("{id_Precio}")]
@@ -94,14 +134,27 @@ namespace ApiServicioCupones.Controllers
 
             if (precioModel == null)
             {
+                Log.Error("No se encontró un precio con el ID {Id_Precio} para realizar la eliminación.", id_Precio);
                 return NotFound();
             }
+
             precioModel.Precio = 0;
             _context.Precios.Update(precioModel);
-            await _context.SaveChangesAsync();
+
+            try
+            {
+                await _context.SaveChangesAsync();
+                Log.Information("El precio con ID {Id_Precio} fue eliminado exitosamente.", id_Precio);
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ocurrió un error al intentar eliminar el precio con ID {Id_Precio}.", id_Precio);
+                return StatusCode(StatusCodes.Status500InternalServerError, "Error al realizar la eliminación del precio.");
+            }
 
             return NoContent();
         }
+
 
 
         private bool PrecioModelExists(int id_Precio)
