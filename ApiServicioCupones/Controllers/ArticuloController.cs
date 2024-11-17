@@ -89,7 +89,7 @@ namespace ApiServicioCupones.Controllers
 
                 // El Id_Articulo se genera automáticamente después de la inserción
                 // Devolvemos el artículo creado con el Id_Articulo recién generado
-                return CreatedAtAction("GetArticuloModel", new { id = articuloModel.Id_Articulo }, articuloModel);
+                return CreatedAtAction("GetArticuloModel", new { id_articulo = articuloModel.Id_Articulo }, articuloModel);
             }
             catch (Exception ex)
             {
