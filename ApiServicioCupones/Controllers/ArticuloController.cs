@@ -25,8 +25,8 @@ namespace ApiServicioCupones.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ArticuloModel>>> GetArticulos()
         {
-            return await _context.Articulos
-                .Include(art => art.Precio).ToListAsync();
+            return await _context.Articulos.ToListAsync();
+               // .Include(art => art.Precio)
         }
 
         // GET: api/Articulo/5
@@ -34,7 +34,7 @@ namespace ApiServicioCupones.Controllers
         public async Task<ActionResult<ArticuloModel>> GetArticuloModel(int id_articulo)
         {
             var articuloModel = await _context.Articulos
-                      .Include(art => art.Precio)
+                      //.Include(art => art.Precio)
                        .FirstOrDefaultAsync(art => art.Id_Articulo == id_articulo);
 
             if (articuloModel == null)
@@ -81,11 +81,24 @@ namespace ApiServicioCupones.Controllers
         [HttpPost]
         public async Task<ActionResult<ArticuloModel>> PostArticuloModel(ArticuloModel articuloModel)
         {
-            _context.Articulos.Add(articuloModel);
-            await _context.SaveChangesAsync();
+            try
+            {
+                // No debes asignar un valor a Id_Articulo. SQL Server lo generará automáticamente.
+                _context.Articulos.Add(articuloModel);
+                await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetArticuloModel", new { id = articuloModel.Id_Articulo }, articuloModel);
+                // El Id_Articulo se genera automáticamente después de la inserción
+                // Devolvemos el artículo creado con el Id_Articulo recién generado
+                return CreatedAtAction("GetArticuloModel", new { id = articuloModel.Id_Articulo }, articuloModel);
+            }
+            catch (Exception ex)
+            {
+                // Log o despliegue del error
+                Console.WriteLine($"Error al guardar el artículo: {ex.Message}");
+                return StatusCode(500, "Error al guardar el artículo.");
+            }
         }
+
 
         // DELETE: api/Articulo/5
         [HttpDelete("{id}")]
