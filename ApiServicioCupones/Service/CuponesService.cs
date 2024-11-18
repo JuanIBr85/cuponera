@@ -34,7 +34,7 @@ namespace ApiServicioCupones.Service
             return nroCupon;
         }
 
-       /* public async Task DesactivaCuponPorFecha()
+        public async Task DesactivaCuponPorFecha()
         {
 
             var cuponesActivos = await _context.Cupones
@@ -45,7 +45,7 @@ namespace ApiServicioCupones.Service
             {
                 var fechaActual = DateOnly.FromDateTime(DateTime.Now);
 
-                if(fechaActual<cupon.FechaInicio || fechaActual > cupon.FechaInicio) 
+                if(fechaActual<cupon.FechaInicio || fechaActual > cupon.FechaFin) 
                 {
                     cupon.Activo = false;
                     _context.Cupones.Update(cupon);
@@ -54,6 +54,27 @@ namespace ApiServicioCupones.Service
 
             await _context.SaveChangesAsync();
             
-        }*/
+        }
+        public async Task ActivarCuponPorFecha()
+        {
+
+            var cuponesDescativados = await _context.Cupones
+                    .Where(c => c.Activo == false)
+                    .ToListAsync();
+
+            foreach (var cupon in cuponesDescativados)
+            {
+                var fechaActual = DateOnly.FromDateTime(DateTime.Now);
+
+                if (fechaActual >= cupon.FechaInicio && fechaActual <= cupon.FechaFin)
+                {
+                    cupon.Activo = true;
+                    _context.Cupones.Update(cupon);
+                }
+            }
+
+            await _context.SaveChangesAsync();
+
+        }
     }
 }
