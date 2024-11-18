@@ -23,16 +23,42 @@ namespace ApiServicioCupones.Controllers
         }
 
         // GET: api/Precios
+        // GET: api/Precios
+        // GET: api/Precios
         [HttpGet]
         public async Task<ActionResult<IEnumerable<PrecioModel>>> GetPrecios()
         {
-            Log.Information("Se consulto la lista de precios.");
+            Log.Information("Se consultó la lista de precios.");
 
             try
             {
-                var precios = await _context.Precios.ToListAsync();
+                // Cargar los precios con el artículo relacionado utilizando Include
+                var precios = await _context.Precios
+                    .Include(p => p.Articulo) // Incluye el artículo relacionado
+                    .Include(p => p.Articulo.Categoria) // Incluye la categoría del artículo
+                    .Select(p => new
+                    {
+                        p.Id_Precio,
+                        p.Precio,
+                        p.Id_Articulo,
+                        Articulo = new
+                        {
+                            p.Articulo.Id_Articulo,
+                            p.Articulo.Nombre_Articulo,
+                            p.Articulo.Descripcion_Articulo,
+                            p.Articulo.Activo,
+                            p.Articulo.Id_Categoria,
+                            Categoria = p.Articulo.Categoria != null ? p.Articulo.Categoria.Nombre : null // Incluye el nombre de la categoría si existe
+                        }
+                    })
+                    .ToListAsync();
 
-                return Ok(precios);
+                if (precios == null)
+                {
+                    return NotFound("No se encontraron precios.");
+                }
+
+                return Ok(precios); // Retorna la lista de precios con todos los detalles del artículo
             }
             catch (Exception ex)
             {
@@ -40,6 +66,8 @@ namespace ApiServicioCupones.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "Error al obtener los precios.");
             }
         }
+
+
 
         // GET: api/Precios/5
         [HttpGet("{id_Precio}")]
