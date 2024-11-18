@@ -51,43 +51,62 @@ namespace ApiServicioCupones.Controllers
 
             if (articuloModel == null)
             {
-                return NotFound();
+                return NotFound(new { message = $"El artículo con ID {id_articulo} no fue encontrado." });
             }
 
             return articuloModel;
         }
 
 
+
         // PUT: api/Articulo/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutArticuloModel(int id, ArticuloModel articuloModel)
+        public async Task<IActionResult> PutArticuloModel(int id, ArticuloModel articuloModel, [FromQuery] decimal precio)
         {
-            if (id != articuloModel.Id_Articulo)
+            // Verificar si el artículo existe
+            var articulo = await _context.Articulos.FindAsync(id);
+            if (articulo == null)
             {
-                return BadRequest();
+                return NotFound(new { message = $"El artículo con ID {id} no fue encontrado." });
             }
 
-            _context.Entry(articuloModel).State = EntityState.Modified;
+            // Actualizar el artículo con los valores recibidos
+            articulo.Nombre_Articulo = articuloModel.Nombre_Articulo;
+            articulo.Descripcion_Articulo = articuloModel.Descripcion_Articulo;
+            articulo.Activo = articuloModel.Activo;
+            articulo.Id_Categoria = articuloModel.Id_Categoria;
 
-            try
+            // Verificar si el precio ha cambiado y actualizarlo si es necesario
+            if (precio > 0)
             {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ArticuloModelExists(id))
+                var precioModel = await _context.Precios
+                                                .FirstOrDefaultAsync(p => p.Id_Articulo == id);
+
+                if (precioModel != null)
                 {
-                    return NotFound();
+                    precioModel.Precio = precio;
+                    _context.Precios.Update(precioModel);
                 }
                 else
                 {
-                    throw;
+                    // Si no existe un precio asociado, agregar uno nuevo
+                    var newPrecio = new PrecioModel
+                    {
+                        Id_Articulo = id,
+                        Precio = precio
+                    };
+                    _context.Precios.Add(newPrecio);
                 }
             }
 
+            _context.Articulos.Update(articulo);
+            await _context.SaveChangesAsync();
+
             return NoContent();
         }
+
+
 
         // POST: api/Articulo
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
