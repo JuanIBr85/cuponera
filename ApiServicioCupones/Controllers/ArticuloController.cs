@@ -114,7 +114,6 @@ namespace ApiServicioCupones.Controllers
         }
 
 
-
         // DELETE: api/Articulo/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteArticuloModel(int id)

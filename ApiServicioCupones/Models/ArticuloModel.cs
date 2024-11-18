@@ -11,6 +11,7 @@ namespace ApiServicioCupones.Models
         public string Nombre_Articulo { get; set; }
 
         public string Descripcion_Articulo { get; set; }
+        public int Id_Categoria { get; set; }  
 
         public bool Activo { get; set; }
 
