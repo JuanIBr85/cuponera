@@ -86,6 +86,15 @@ namespace ApiServicioCupones.Controllers
 
             try
             {
+                // Verificar si la categoría existe
+                var categoriaExistente = await _context.Categorias
+                                                       .FirstOrDefaultAsync(c => c.Id_Categoria == articuloModel.Id_Categoria);
+
+                if (categoriaExistente == null)
+                {
+                    return BadRequest("La categoría especificada no existe.");
+                }
+
                 // Agregar el artículo
                 _context.Articulos.Add(articuloModel);
                 await _context.SaveChangesAsync();
