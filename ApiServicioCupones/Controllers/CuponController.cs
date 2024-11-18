@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using ApiServicioCupones.Data;
 using ApiServicioCupones.Models;
 using ApiServicioCupones.Service;
+using ApiServicioCupones.Interfaces;
 
 namespace ApiServicioCupones.Controllers
 {
@@ -16,9 +17,9 @@ namespace ApiServicioCupones.Controllers
     public class CuponController : ControllerBase
     {
         private readonly DataBaseContext _context;
-        private readonly CuponesService _cuponesService;
+        private readonly ICuponesService _cuponesService;
 
-        public CuponController(DataBaseContext context, CuponesService cuponesService)
+        public CuponController(DataBaseContext context, ICuponesService cuponesService)
         {
             _context = context;
             _cuponesService = cuponesService;
