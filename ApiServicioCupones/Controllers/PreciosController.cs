@@ -70,37 +70,42 @@ namespace ApiServicioCupones.Controllers
         // PUT: api/Precios/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id_Precio}")]
-        public async Task<IActionResult> PutPrecioModel(int id_Precio, PrecioModel precioModel)
+        public async Task<IActionResult> PutPrecioModel(int id_Precio, [FromBody] decimal precio)
         {
-            if (id_Precio != precioModel.Id_Precio)
+            // Buscar el precio con el ID proporcionado
+            var precioModel = await _context.Precios.FindAsync(id_Precio);
+
+            if (precioModel == null)
             {
-                return BadRequest();
+                return NotFound(new { message = $"No se encontró un precio con el ID {id_Precio}." });
             }
 
-            _context.Entry(precioModel).State = EntityState.Modified;
+            // Verificar que el precio sea un valor positivo antes de actualizar
+            if (precio <= 0)
+            {
+                return BadRequest(new { message = "El precio debe ser un valor positivo." });
+            }
 
+            // Actualizar el precio
+            precioModel.Precio = precio;
+
+            // Guardar cambios en la base de datos
+            _context.Precios.Update(precioModel);
             try
             {
                 await _context.SaveChangesAsync();
-                Log.Information("El precio con ID {Id_Precio} fue actualizado exitosamente.", id_Precio);
-
+                Log.Information("El precio con ID {Id_Precio} fue actualizado a {Precio}.", id_Precio, precio);
             }
-            catch (DbUpdateConcurrencyException ex)
+            catch (Exception ex)
             {
-                if (!PrecioModelExists(id_Precio))
-                {
-                    Log.Error("No se encontró un precio con el ID {Id_Precio} para actualizar.", id_Precio);
-                    return NotFound();
-                }
-                else
-                {
-                    Log.Error(ex, "Ocurrió un error al intentar actualizar el precio con ID {Id_Precio}.", id_Precio);
-                    throw;
-                }
+                Log.Error(ex, "Ocurrió un error al intentar actualizar el precio con ID {Id_Precio}.", id_Precio);
+                return StatusCode(StatusCodes.Status500InternalServerError, "Error al actualizar el precio.");
             }
 
-            return NoContent();
+            return NoContent(); // Respuesta exitosa, sin contenido
         }
+
+
 
         // POST: api/Precios
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754

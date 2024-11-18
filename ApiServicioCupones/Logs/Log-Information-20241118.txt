@@ -1,0 +1,5 @@
+2024-11-18 00:35:28.201 -03:00 [INF] El precio del artículo con ID 1 fue actualizado a 1.1.
+2024-11-18 00:38:00.624 -03:00 [INF] Se consulto la lista de precios.
+2024-11-18 00:38:22.587 -03:00 [INF] El precio con ID 4115 fue eliminado exitosamente.
+2024-11-18 00:38:35.988 -03:00 [INF] Iniciando la operación para obtener el precio con ID 4115
+2024-11-18 00:38:36.019 -03:00 [INF] Precio con ID 4115 obtenido con éxito.

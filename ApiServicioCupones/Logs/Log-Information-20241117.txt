@@ -3,3 +3,6 @@
 2024-11-17 19:53:46.868 -03:00 [INF] Precio con ID 103 obtenido con éxito.
 2024-11-17 19:54:11.761 -03:00 [INF] Iniciando la operación para obtener el precio con ID 1515
 2024-11-17 19:54:11.828 -03:00 [INF] No se encontró un precio con el ID 1515
+2024-11-17 23:38:07.538 -03:00 [INF] Se consulto la lista de precios.
+2024-11-17 23:40:40.669 -03:00 [INF] Iniciando la operación para obtener el precio con ID 4115
+2024-11-17 23:40:40.698 -03:00 [INF] Precio con ID 4115 obtenido con éxito.
