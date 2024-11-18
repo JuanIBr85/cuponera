@@ -16,3 +16,8 @@
 2024-11-18 08:48:55.505 -03:00 [INF] Se consultó la lista de precios.
 2024-11-18 08:49:23.023 -03:00 [INF] Iniciando la operación para obtener el precio con ID 4115
 2024-11-18 08:49:23.152 -03:00 [INF] Precio con ID 4115 obtenido con éxito.
+2024-11-18 13:50:36.773 -03:00 [INF] El precio con ID 1 fue actualizado a 1.
+2024-11-18 13:50:41.346 -03:00 [INF] Se consultó la lista de precios.
+2024-11-18 13:51:01.800 -03:00 [INF] El precio con ID 4115 fue actualizado a 99.99.
+2024-11-18 13:51:09.614 -03:00 [INF] Iniciando la operación para obtener el precio con ID 4115
+2024-11-18 13:51:09.644 -03:00 [INF] Precio con ID 4115 obtenido con éxito.

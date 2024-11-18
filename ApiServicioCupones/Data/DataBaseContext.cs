@@ -25,6 +25,13 @@ namespace ApiServicioCupones.Data
                 .WithOne(p => p.Articulo)
                 .HasForeignKey<PrecioModel>(p => p.Id_Articulo);
 
+            // Relación Categoría - Cupon_Categoria
+            modelBuilder.Entity<Cupon_CategoriaModel>()
+                .HasOne(cc => cc.Categoria)
+                .WithMany(c => c.Cupones_Categorias)
+                .HasForeignKey(cc => cc.Id_Categoria)
+                .OnDelete(DeleteBehavior.Cascade);
+
             // Configuración de claves principales
             modelBuilder.Entity<CategoriaModel>().HasKey(c => c.Id_Categoria);
             modelBuilder.Entity<CuponModel>().HasKey(c => c.Id_Cupon);
