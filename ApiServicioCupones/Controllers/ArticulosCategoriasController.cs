@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using ApiServicioCupones.Data;
 using ApiServicioCupones.Models;
+using Serilog;
 
 namespace ApiServicioCupones.Controllers
 {
@@ -25,39 +26,40 @@ namespace ApiServicioCupones.Controllers
         [HttpPost("{idCategoria}/asignar-articulos")]
         public async Task<IActionResult> AsignarArticulosACategoria(int idCategoria, [FromBody] List<int> idArticulos)
         {
-            // Verificar si la categoría existe
-            var categoria = await _context.Categorias.FindAsync(idCategoria);
-            if (categoria == null)
-            {
-                return NotFound(new { message = $"La categoría con ID {idCategoria} no existe." });
-            }
-
-            // Filtrar los artículos válidos
-            var articulos = await _context.Articulos
-                .Where(a => idArticulos.Contains(a.Id_Articulo))
-                .ToListAsync();
-
-            if (articulos.Count == 0)
-            {
-                return BadRequest(new { message = "No se encontraron artículos válidos en la lista proporcionada." });
-            }
-
-            // Asignar la categoría a los artículos
-            foreach (var articulo in articulos)
-            {
-                articulo.Id_Categoria = idCategoria;
-            }
-
-            // Guardar los cambios en la base de datos
             try
             {
+                var categoria = await _context.Categorias.FindAsync(idCategoria);
+                if (categoria == null)
+                {
+                    Log.Information($"La categoría con ID {idCategoria} no existe.");
+                    return NotFound($"La categoría con ID {idCategoria} no existe.");
+                }
+
+                var articulos = await _context.Articulos
+                    .Where(a => idArticulos.Contains(a.Id_Articulo))
+                    .ToListAsync();
+
+                if (articulos.Count == 0)
+                {
+                    Log.Information($"No se encontraron artículos para asignar a la categoría con ID {idCategoria}.");
+                    return BadRequest("No se encontraron artículos válidos en la lista proporcionada.");
+                }
+
+                foreach (var articulo in articulos)
+                {
+                    articulo.Id_Categoria = idCategoria;
+                }
+
                 await _context.SaveChangesAsync();
-                return Ok(new { message = $"{articulos.Count} artículos fueron asignados a la categoría con ID {idCategoria}." });
+                Log.Information($"{articulos.Count} artículos fueron asignados a la categoría con ID {idCategoria}.");
+                return Ok($"{articulos.Count} artículos fueron asignados a la categoría con ID {idCategoria}.");
             }
             catch (Exception ex)
             {
-                return StatusCode(500, new { message = "Error al asignar los artículos a la categoría.", details = ex.Message });
+                Log.Error($"Error al asignar los artículos a la categoría con ID {idCategoria}, error: {ex.Message}");
+                return BadRequest($"Hubo un problema, error: {ex.Message}");
             }
         }
+
     }
 }
