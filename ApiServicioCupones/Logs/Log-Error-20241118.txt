@@ -28,3 +28,9 @@ System.Data.SqlTypes.SqlNullValueException: Data is Null. This method or propert
    at Microsoft.EntityFrameworkCore.EntityFrameworkQueryableExtensions.ToListAsync[TSource](IQueryable`1 source, CancellationToken cancellationToken)
    at Microsoft.EntityFrameworkCore.EntityFrameworkQueryableExtensions.ToListAsync[TSource](IQueryable`1 source, CancellationToken cancellationToken)
    at ApiServicioCupones.Controllers.PreciosController.GetPrecios() in C:\Users\HP\Documents\Cuponera\ApiServicioCupones\Controllers\PreciosController.cs:line 34
+2024-11-18 17:38:50.938 -03:00 [ERR] Hubo un problema al crear la categoría, error: An error occurred while saving the entity changes. See the inner exception for details.
+2024-11-18 17:41:40.360 -03:00 [ERR] Hubo un problema al eliminar la categoría con ID 1004, error: An error occurred while saving the entity changes. See the inner exception for details.
+2024-11-18 17:42:14.316 -03:00 [ERR] Hubo un problema al eliminar la categoría con ID 1005, error: An error occurred while saving the entity changes. See the inner exception for details.
+2024-11-18 17:42:44.702 -03:00 [ERR] Hubo un problema al eliminar la categoría con ID 1006, error: An error occurred while saving the entity changes. See the inner exception for details.
+2024-11-18 17:46:46.628 -03:00 [ERR] Hubo un problema al eliminar la categoría con ID 1005, error: The DELETE statement conflicted with the REFERENCE constraint "FK_Cupones_Categorias_Categorias1". The conflict occurred in database "Cupones", table "dbo.Cupones_Categorias", column 'Id_Categoria'.
+2024-11-18 17:48:12.053 -03:00 [ERR] Hubo un problema al eliminar la categoría con ID 1004, error: The DELETE statement conflicted with the REFERENCE constraint "FK_Cupones_Categorias_Categorias1". The conflict occurred in database "Cupones", table "dbo.Cupones_Categorias", column 'Id_Categoria'.

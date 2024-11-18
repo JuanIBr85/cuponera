@@ -145,13 +145,20 @@ namespace ApiServicioCupones.Controllers
         {
             try
             {
-                var categoriaModel = await _context.Categorias.FindAsync(id_Categoria);
+                var categoriaModel = await _context.Categorias
+                    .Include(c => c.Cupones_Categorias) // Asegúrate de incluir las relaciones
+                    .FirstOrDefaultAsync(c => c.Id_Categoria == id_Categoria);
+
                 if (categoriaModel == null)
                 {
                     Log.Error($"La categoría con ID {id_Categoria} no fue encontrada.");
                     return NotFound();
                 }
 
+                // Eliminar las relaciones primero
+                _context.Cupones_Categorias.RemoveRange(categoriaModel.Cupones_Categorias);
+
+                // Luego eliminar la categoría
                 _context.Categorias.Remove(categoriaModel);
                 await _context.SaveChangesAsync();
 
@@ -165,6 +172,7 @@ namespace ApiServicioCupones.Controllers
                 return BadRequest($"Hubo un problema, error: {ex.Message}");
             }
         }
+
 
 
         private bool CategoriaModelExists(int id_Categoria)
