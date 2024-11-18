@@ -70,23 +70,44 @@ namespace ApiServicioCupones.Controllers
 
 
         // GET: api/Precios/5
+        // GET: api/Precios/{id_Precio}
         [HttpGet("{id_Precio}")]
-        public async Task<ActionResult<PrecioModel>> GetPrecioModel(int id_Precio)
+        public async Task<ActionResult> GetPrecioModel(int id_Precio)
         {
             Log.Information("Iniciando la operación para obtener el precio con ID {Id}", id_Precio);
 
             try
             {
-                var precioModel = await _context.Precios.FindAsync(id_Precio);
+                // Cargar el precio con los datos relacionados
+                var precioModel = await _context.Precios
+                    .Include(p => p.Articulo) // Incluye el artículo relacionado
+                    .Include(p => p.Articulo.Categoria) // Incluye la categoría del artículo
+                    .Where(p => p.Id_Precio == id_Precio)
+                    .Select(p => new
+                    {
+                        p.Id_Precio,
+                        p.Precio,
+                        p.Id_Articulo,
+                        Articulo = new
+                        {
+                            p.Articulo.Id_Articulo,
+                            p.Articulo.Nombre_Articulo,
+                            p.Articulo.Descripcion_Articulo,
+                            p.Articulo.Activo,
+                            p.Articulo.Id_Categoria,
+                            Categoria = p.Articulo.Categoria != null ? p.Articulo.Categoria.Nombre : null
+                        }
+                    })
+                    .FirstOrDefaultAsync();
 
                 if (precioModel == null)
                 {
                     Log.Information("No se encontró un precio con el ID {Id}", id_Precio);
-                    return NotFound();
+                    return NotFound(new { message = $"No se encontró un precio con el ID {id_Precio}." });
                 }
 
                 Log.Information("Precio con ID {Id} obtenido con éxito.", id_Precio);
-                return Ok(precioModel);
+                return Ok(precioModel); // Retorna los datos con las relaciones
             }
             catch (Exception ex)
             {
@@ -94,6 +115,7 @@ namespace ApiServicioCupones.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "Error al obtener el precio.");
             }
         }
+
 
         // PUT: api/Precios/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
