@@ -21,13 +21,25 @@ namespace ApiServicioCupones.Controllers
             _context = context;
         }
 
-        // GET: api/Articulo
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ArticuloModel>>> GetArticulos()
+        public async Task<ActionResult<IEnumerable<object>>> GetArticulos()
         {
-            return await _context.Articulos.ToListAsync();
-               // .Include(art => art.Precio)
+            var articulos = await _context.Articulos
+                                          .Include(art => art.Categoria) // Carga la relación con Categorias
+                                          .Select(art => new
+                                          {
+                                              art.Id_Articulo,
+                                              art.Nombre_Articulo,
+                                              art.Descripcion_Articulo,
+                                              art.Activo,
+                                              CategoriaNombre = art.Categoria != null ? art.Categoria.Nombre : null,
+                                              Precio = art.Precio != null ? (decimal?)art.Precio.Precio : null
+                                          })
+                                          .ToListAsync();
+
+            return Ok(articulos);
         }
+
 
         // GET: api/Articulo/5
         [HttpGet("{id_articulo}")]

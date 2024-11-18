@@ -17,5 +17,8 @@ namespace ApiServicioCupones.Models
 
         [ForeignKey("Id_Articulo")]
         public virtual PrecioModel? Precio { get; set; }
+
+        [ForeignKey("Id_Categoria")]
+        public virtual CategoriaModel? Categoria { get; set; }
     }
 }
