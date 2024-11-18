@@ -2,6 +2,8 @@
 {
     public interface ICuponesService
     {
+        Task ActivarCuponPorFecha();
+        Task DesactivaCuponPorFecha();
         Task <string> GenerarNroCupon();
     }
 }
