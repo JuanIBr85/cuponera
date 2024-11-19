@@ -146,7 +146,7 @@ namespace ApiServicioCupones.Controllers
             try
             {
                 var categoriaModel = await _context.Categorias
-                    .Include(c => c.Cupones_Categorias) // Asegúrate de incluir las relaciones
+                    .Include(c => c.Cupones_Categorias) 
                     .FirstOrDefaultAsync(c => c.Id_Categoria == id_Categoria);
 
                 if (categoriaModel == null)
@@ -155,10 +155,9 @@ namespace ApiServicioCupones.Controllers
                     return NotFound();
                 }
 
-                // Eliminar las relaciones primero
                 _context.Cupones_Categorias.RemoveRange(categoriaModel.Cupones_Categorias);
 
-                // Luego eliminar la categoría
+
                 _context.Categorias.Remove(categoriaModel);
                 await _context.SaveChangesAsync();
 
